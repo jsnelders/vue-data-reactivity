@@ -19,9 +19,20 @@ const ccList = {
 
 
 
+  methods: {
+    selectItem(itemId)
+    {
+      this.$emit('select-item', itemId);
+    }
+  },
+
+
+
+
+
   template: `
   <ul>
-    <li v-for="item in list" :key="list.id">
+    <li v-for="item in list" :key="list.id" @click="selectItem(item.id)" style="cursor: pointer">
       {{item.title}}
     </li>
   </ul>
