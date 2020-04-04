@@ -2,11 +2,30 @@ import Vue from 'vue'
 
 
 
-Vue.component('button-counter', {
+const ccList = {
   data: function () {
     return {
       count: 0
     }
   },
-  template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
-})
+
+
+
+  props: [
+    'list'
+  ],
+
+
+
+
+
+  template: `
+  <ul>
+    <li v-for="item in list" :key="list.id">
+      {{item.title}}
+    </li>
+  </ul>
+  `
+};
+
+export default ccList;
