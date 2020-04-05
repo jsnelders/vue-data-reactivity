@@ -1,7 +1,5 @@
 import globalStore from '../store.js'
 
-import Vue from 'vue'
-
 
 
 const ccDetails = {
@@ -45,10 +43,18 @@ const ccDetails = {
 
   template: `
   <div>
+    <h2>Item Details</h2>
     Selected Item ID: {{itemId}}<br><br>
     ID: {{getItem.id}}<br>
     Type: {{getItem.type}}<br>
     Title: {{getItem.title}}<br>
+
+
+    <br>
+    <small>
+    (This item details component demonstrates accessing data directly 
+    from globalStore, rather than passing data in from the parent.)
+    </small>
   </div>
   `
 };

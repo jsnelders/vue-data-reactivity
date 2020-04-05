@@ -9,6 +9,7 @@ Vue.component('cc-list', ccList);
 Vue.component('cc-details', ccDetails);
 
 
+
 new Vue({
   el: '#app',
 
@@ -134,19 +135,24 @@ new Vue({
 
   template: `
   <div>
-    <h1>Vue 2.x Data Reactivity Sample</h1>
+    <h1>Vue (2.x) Data Reactivity Sample</h1>
 
 
     <button type="button" @click="addCategory">Add Category</button>
     <button type="button" @click="addTag">Add Tag</button>
+
+    <p>
+      Click on an item title in the lists below to select it and
+      show the details at the bottom.
+    </p>
   
-    <h2>Categories (computed)</h2>
+    <h2>Categories (via computed property)</h2>
     <cc-list :list="categoryItems" @select-item="selectItem" @remove-item="removeItem" />
 
-    <h2>Tags (computed)</h2>
+    <h2>Tags (via computed property)</h2>
     <cc-list :list="tagItems" @select-item="selectItem" @remove-item="removeItem" />
 
-    <h2>Tags (listOfTags)</h2>
+    <h2>Tags (listOfTags data attribute)</h2>
     <cc-list :list="listOfTags" @select-item="selectItem" @remove-item="removeItem" />
 
 

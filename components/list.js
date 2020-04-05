@@ -1,7 +1,3 @@
-import Vue from 'vue'
-
-
-
 const ccList = {
   data: function () {
     return {
