@@ -45,40 +45,24 @@ new Vue({
 
 
   methods: {
+
+    selectItem(itemId)
+    {
+      this.selectedItemId = itemId;
+    },
+
+
     addCategory()
     {
-      this.idCounter++;
-
-      this.globalList.push(
-        { 
-          id: this.idCounter, 
-          type: "category", 
-          title: "Category " + this.idCounter
-        }
-      );
+      globalStore.addCategory();
     },
 
 
 
     addTag()
     {
-      this.idCounter++;
-
-      this.globalList.push(
-        { 
-          id: this.idCounter, 
-          type: "tag", 
-          title: "Tag " + this.idCounter
-        }
-      );
+      globalStore.addTag();
     },
-
-
-
-    selectItem(itemId)
-    {
-      this.selectedItemId = itemId;
-    }
 
   },
 
@@ -98,7 +82,7 @@ new Vue({
     <cc-list :list="categoryItems" @select-item="selectItem" />
 
     <h2>Tags</h2>
-    <cc-list :list="tagItems" />
+    <cc-list :list="tagItems" @select-item="selectItem" />
 
 
     <hr>

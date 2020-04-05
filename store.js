@@ -1,3 +1,8 @@
+/**
+ * A global store of data that can be shared between components.
+ * It's good a good idea to only mutate data in this store via methods
+ * defined on the object. It makes tracking the cause of mutation much easier.
+ */
 const globalStore = {
     list: [
       { id: 1, type: "category", title: "Category 1"},
@@ -16,7 +21,40 @@ const globalStore = {
       { id: 13, type: "tag", title: "Tag 3"}
     ],
 
-    idCounter: 13
+    idCounter: 13,
+
+
+
+
+
+
+    addCategory()
+    {
+      this.idCounter++;
+
+      this.list.push(
+        { 
+          id: this.idCounter, 
+          type: "category", 
+          title: "Category " + this.idCounter
+        }
+      );
+    },
+
+
+
+    addTag()
+    {
+      this.idCounter++;
+
+      this.list.push(
+        { 
+          id: this.idCounter, 
+          type: "tag", 
+          title: "Tag " + this.idCounter
+        }
+      );
+    },
 };
 
 
