@@ -55,6 +55,15 @@ const globalStore = {
         }
       );
     },
+
+
+
+    removeItem(itemId)
+    {
+      const index = this.list.findIndex(obj => obj.id === itemId);
+
+      this.list.splice(index, 1);
+    }
 };
 
 

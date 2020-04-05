@@ -15,9 +15,29 @@ new Vue({
 
 
   data: {
+    // Reference the `list` in the global store.
+    // I like to do it this way in case I need to add a watcher to the list.
     globalList: globalStore.list,
 
-    selectedItemId: 0
+    // ID of an item selected in one of the rendered lists.
+    selectedItemId: 0,
+
+    /**
+     * An alternate to using a computed to manage a list of items of type "tag".
+     * Updates to this list are triggered via a watcher on `globalList`
+     * which executes the `updateListOfTags` method.
+     */
+    listOfTags: []
+  },
+
+
+
+
+
+  mounted()
+  {
+    // Ensure `listOfTags` is populated when the component initially loads.
+    this.updateListOfTags();
   },
 
 
@@ -25,15 +45,23 @@ new Vue({
 
 
   /**
-   * Computed properties will react to changes in the underlying list.
-   * Return a listed list of items by type.
+   * Computed properties will react to changes (add, remove items) 
+   * in the underlying `list` array.
    */
   computed: {
+    /**
+     * Return all items in `list` of type "category".
+     */
     categoryItems()
     {
       return this.globalList.filter( (item) => { return item.type == "category" } );
     },
 
+
+
+    /**
+     * Return all items in `list` of type "tag".
+     */
     tagItems()
     {
       return this.globalList.filter( (item) => { return item.type == "tag" } );
@@ -46,10 +74,24 @@ new Vue({
 
   methods: {
 
+    /**
+     * Event handlers: When a rendered list item is "selected".
+     */
     selectItem(itemId)
     {
       this.selectedItemId = itemId;
     },
+
+
+
+    /**
+     * Event handler: When a rendered list item is selected to be removed.
+     */
+    removeItem(itemId)
+    {
+      globalStore.removeItem(itemId);
+    },
+
 
 
     addCategory()
@@ -64,6 +106,26 @@ new Vue({
       globalStore.addTag();
     },
 
+
+
+    updateListOfTags()
+    {
+      this.listOfTags = this.globalList.filter( (item) => { return item.type == "tag" } );
+    }
+
+  },
+
+
+
+
+
+  watch: {
+    /**
+     * Whenever the `list` changes.
+     */
+    globalList: function (val, olvVal) {
+      this.updateListOfTags();
+    }
   },
 
 
@@ -72,17 +134,20 @@ new Vue({
 
   template: `
   <div>
-    <h1>hello Vue</h1>
+    <h1>Vue 2.x Data Reactivity Sample</h1>
 
 
     <button type="button" @click="addCategory">Add Category</button>
     <button type="button" @click="addTag">Add Tag</button>
   
-    <h2>Categories</h2>
-    <cc-list :list="categoryItems" @select-item="selectItem" />
+    <h2>Categories (computed)</h2>
+    <cc-list :list="categoryItems" @select-item="selectItem" @remove-item="removeItem" />
 
-    <h2>Tags</h2>
-    <cc-list :list="tagItems" @select-item="selectItem" />
+    <h2>Tags (computed)</h2>
+    <cc-list :list="tagItems" @select-item="selectItem" @remove-item="removeItem" />
+
+    <h2>Tags (listOfTags)</h2>
+    <cc-list :list="listOfTags" @select-item="selectItem" @remove-item="removeItem" />
 
 
     <hr>
